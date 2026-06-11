@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { randomUUID } from "crypto";
-import { logger } from "./../config/logger.ts";
+import { logger } from "./../config/logger.js";
 
 export function requestContext(
     req: Request,

@@ -2,9 +2,10 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as schema from "./auth-schema";
-import { env } from "../config/env";
-import { tetherUsers } from "../db/schema";
+import * as schema from "./auth-schema.js";
+import { env } from "../config/env.js";
+import { tetherUsers } from "../db/schema.js";
+import { generateUsername } from "../utils/generateRandomUsername.js";
 
 const db = drizzle(new Pool({ connectionString: env.DATABASE_URL }), {
     schema,
@@ -26,7 +27,8 @@ export const auth = betterAuth({
                 after: async (user) => {
                     await db.insert(tetherUsers).values({
                         authUserId: user.id,
-                        username: user.name,
+                        displayName: user.name || user.email?.split("@")[0] || "User",
+                        username: await generateUsername(),
                         createdAt: user.createdAt,
                         updatedAt: user.createdAt,
                     });
@@ -34,5 +36,5 @@ export const auth = betterAuth({
             },
         },
     },
-    trustedOrigins: ["http://localhost:3001"],
+    trustedOrigins: [env.FRONTEND_URL],
 });

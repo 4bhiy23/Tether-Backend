@@ -1,7 +1,7 @@
 // src/shared/errors/errorHandler.ts
 
 import type { Request, Response, NextFunction } from "express";
-import { AppError } from "./AppError.ts";
+import { AppError } from "./AppError.js";
 
 export function errorHandler(
     err: Error,

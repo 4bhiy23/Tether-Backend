@@ -1,6 +1,6 @@
 import { Router } from "express";
-import db from "../../db/db.ts";
-import { AppError } from "../../shared/errors/AppError.ts";
+import db from "../../db/db.js";
+import { AppError } from "../../shared/errors/AppError.js";
 
 const router = Router();
 /**

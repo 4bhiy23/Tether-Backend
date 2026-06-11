@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 
-import { env } from "./config/env.ts";
+import { env } from "./config/env.js";
 
 export const app = express();
 
@@ -26,7 +26,7 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 
 // Swagger setup
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./docs/swagger.ts";
+import { swaggerSpec } from "./docs/swagger.js";
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -36,15 +36,15 @@ app.get("/docs.json", (_, res) => {
 
 
 // Mount routes here later
-import healthRouter from "./modules/health/health.route.ts";
-import { errorHandler } from "./shared/errors/errorHandler.ts";
-import { AppError } from "./shared/errors/AppError.ts";
-import { requestContext } from "./middleware/requestContext.ts";
-import { auth } from "./lib/auth.ts";
-
+import healthRouter from "./modules/health/health.route.js";
+import { errorHandler } from "./shared/errors/errorHandler.js";
+import { requestContext } from "./middleware/requestContext.js";
+import { auth } from "./lib/auth.js";
+import userRouter from "./modules/users/tetherUsers.routes.js";
 
 
 app.use("/v1/api/health", healthRouter);
+app.use("/v1/api/users", userRouter);
 
 // app.use("/api/profiles", profileRoutes);
 // app.use("/api/conversations", conversationRoutes);

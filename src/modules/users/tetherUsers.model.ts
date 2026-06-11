@@ -11,9 +11,9 @@ export const tetherUsers = pgTable(
             .default(sql`gen_random_uuid()`),
 
         authUserId: text("auth_user_id").notNull().unique(), // From Better-Auth
+        displayName: text("display_name").notNull(),
         username: text("username").notNull().unique(),
-        avatarUrl: text("avatar_url"),
-        bio: text("bio"),
+        bio: text("bio").default("NONE"),
 
         createdAt: timestamp("created_at", { withTimezone: true })
             .notNull(),

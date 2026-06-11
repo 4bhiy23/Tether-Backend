@@ -1,0 +1,1 @@
+ALTER TABLE "tetherUsers" ADD COLUMN "display_name" text NOT NULL;
