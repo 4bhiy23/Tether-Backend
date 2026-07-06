@@ -1,5 +1,4 @@
 import { pgTable, uuid, timestamp, index, text } from "drizzle-orm/pg-core";
-import { friendRequestStatus } from "./enums.js";
 import { user } from "../schema.js"
 import { sql } from "drizzle-orm";
 export const friendRequests = pgTable(
@@ -17,7 +16,7 @@ export const friendRequests = pgTable(
             .notNull()
             .references(() => user.id),
 
-        status: friendRequestStatus("status").notNull(),
+        status: text("status").notNull(),
 
         createdAt: timestamp("created_at", { withTimezone: true })
             .notNull()

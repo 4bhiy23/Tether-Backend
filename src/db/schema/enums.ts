@@ -1,12 +1,5 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
-export const friendRequestStatus = pgEnum("friend_request_status", [
-    "pending",
-    "accepted",
-    "rejected",
-    "cancelled",
-]);
-
 export const conversationType = pgEnum("conversation_type", [
     "private",
     "group",

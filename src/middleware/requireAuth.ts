@@ -21,7 +21,11 @@ export async function requireAuth(
     (req as Request & { session: typeof session }).session = session;
 
     const [reqUser] = await db
-        .select()
+        .select({
+            image: user.image,
+            username: user.username,
+            bio: user.bio
+        })
         .from(user)
         .where(eq(user.id, session.user.id));
     (req as Request & { user: typeof user }).user = reqUser;
