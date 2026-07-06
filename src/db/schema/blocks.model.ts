@@ -1,6 +1,6 @@
-import { pgTable, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
-import { tetherUsers } from "../../modules/users/tetherUsers.model.ts";
+import { pgTable, timestamp, uniqueIndex, uuid, text } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+import { user } from "../schema.js";
 
 export const blocks = pgTable(
     "blocks",
@@ -9,13 +9,13 @@ export const blocks = pgTable(
             .primaryKey()
             .default(sql`gen_random_uuid()`),
 
-        blockerId: uuid("blocker_id")
+        blockerId: text("blocker_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
-        blockedId: uuid("blocked_id")
+        blockedId: text("blocked_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
         createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     },

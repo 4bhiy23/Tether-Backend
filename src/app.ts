@@ -36,7 +36,7 @@ app.get("/docs.json", (_, res) => {
 
 
 // Mount routes here later
-import healthRouter from "./modules/health/health.route.js";
+import healthRouter from "./modules/health/health.routes.js";
 import { errorHandler } from "./shared/errors/errorHandler.js";
 import { requestContext } from "./middleware/requestContext.js";
 import { auth } from "./lib/auth.js";

@@ -1,7 +1,7 @@
 import { index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { conversations } from "../schema/conversations.model.ts";
-import { tetherUsers } from "../../modules/users/tetherUsers.model.ts";
-import { messageType } from "./enums";
+import { conversations } from "../schema/conversations.model.js";
+import { user } from "../schema.js"
+import { messageType } from "./enums.js";
 import { sql } from "drizzle-orm";
 
 export const messages = pgTable(
@@ -15,9 +15,9 @@ export const messages = pgTable(
             .notNull()
             .references(() => conversations.id),
 
-        senderId: uuid("sender_id")
+        senderId: text("sender_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
         type: messageType("type").notNull(),
 

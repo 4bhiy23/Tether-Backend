@@ -1,6 +1,6 @@
-import { pgTable, uuid, timestamp, index } from "drizzle-orm/pg-core";
-import { friendRequestStatus } from "./enums";
-import { tetherUsers } from "../../modules/users/tetherUsers.model.ts";
+import { pgTable, uuid, timestamp, index, text } from "drizzle-orm/pg-core";
+import { friendRequestStatus } from "./enums.js";
+import { user } from "../schema.js"
 import { sql } from "drizzle-orm";
 export const friendRequests = pgTable(
     "friend_requests",
@@ -9,18 +9,22 @@ export const friendRequests = pgTable(
             .primaryKey()
             .default(sql`gen_random_uuid()`),
 
-        senderId: uuid("sender_id")
+        senderId: text("sender_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
-        receiverId: uuid("receiver_id")
+        receiverId: text("receiver_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
         status: friendRequestStatus("status").notNull(),
 
-        createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-        updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .notNull()
+            .defaultNow(),
+        updatedAt: timestamp("updated_at", { withTimezone: true })
+            .notNull()
+            .defaultNow(),
     },
     (table) => ({
         receiverStatusIdx: index("fr_receiver_status_idx").on(

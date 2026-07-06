@@ -4,8 +4,9 @@ import {
     timestamp,
     uniqueIndex,
     uuid,
+    text,
 } from "drizzle-orm/pg-core";
-import { tetherUsers } from "../../modules/users/tetherUsers.model.ts";
+import { user } from "../schema.js"
 import { sql } from "drizzle-orm";
 
 export const friendships = pgTable(
@@ -15,13 +16,13 @@ export const friendships = pgTable(
             .primaryKey()
             .default(sql`gen_random_uuid()`),
 
-        userId: uuid("user_id")
+        userId: text("user_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
-        friendId: uuid("friend_id")
+        friendId: text("friend_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
         createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     },

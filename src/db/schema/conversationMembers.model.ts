@@ -5,11 +5,12 @@ import {
     timestamp,
     uniqueIndex,
     uuid,
+    text,
 } from "drizzle-orm/pg-core";
-import { conversations } from "./conversations.model";
-import { tetherUsers } from "../../modules/users/tetherUsers.model.ts";
+import { conversations } from "./conversations.model.js";
 import { sql } from "drizzle-orm";
-import { conversationMemberRole } from "./enums";
+import { conversationMemberRole } from "./enums.js";
+import { user } from "../schema.js";
 
 export const conversationMembers = pgTable(
     "conversation_members",
@@ -22,9 +23,9 @@ export const conversationMembers = pgTable(
             .notNull()
             .references(() => conversations.id),
 
-        userId: uuid("user_id")
+        userId: text("user_id")
             .notNull()
-            .references(() => tetherUsers.id),
+            .references(() => user.id),
 
         role: conversationMemberRole("role").notNull(),
 
